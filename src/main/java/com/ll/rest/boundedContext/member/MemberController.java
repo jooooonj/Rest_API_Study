@@ -38,7 +38,6 @@ public class MemberController {
     @PostMapping("/login")
     public RsData<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse res) {
         String accessToken = memberService.genAccessToken(loginRequest.username, loginRequest.password);
-        res.addHeader("Authentication", accessToken);
 
         return RsData.of("S-1", "엑세스 토큰이 발급되었습니다.", new LoginResponse(accessToken));
     }
