@@ -1,4 +1,4 @@
-package com.ll.rest.boundedContext.member;
+package com.ll.rest.boundedContext.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ll.rest.base.entity.BaseEntity;
