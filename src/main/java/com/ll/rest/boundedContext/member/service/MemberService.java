@@ -43,4 +43,8 @@ public class MemberService {
 
         return jwtProvider.genToken(member.toClaims(), 60 * 60 * 24 * 365);
     }
+
+    public Optional<Member> findById(Long userId) {
+        return memberRepository.findById(userId);
+    }
 }
