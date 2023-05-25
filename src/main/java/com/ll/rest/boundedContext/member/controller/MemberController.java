@@ -45,7 +45,17 @@ public class MemberController {
     @PostMapping("/login")
     @Operation(summary = "로그인, 엑세스 토큰 발급")
     public RsData<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse res) {
-        String accessToken = memberService.genAccessToken(loginRequest.username, loginRequest.password);
+        Member member = memberService
+                .findByUsername(loginRequest.getUsername())
+                .orElse(null);
+
+        if (member == null) return RsData.of("F-1", "존재하지 않는 회원입니다.");
+
+        RsData rsData = memberService.canGenAccessToken(member, loginRequest.getPassword());
+
+        if (rsData.isFail()) return rsData;
+
+        String accessToken = memberService.genAccessToken(member, loginRequest.getPassword());
 
         return RsData.of("S-1", "엑세스 토큰이 발급되었습니다.", new LoginResponse(accessToken));
     }
